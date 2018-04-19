@@ -94,6 +94,7 @@ class MessageDispatcher(object):
         if msg_respond_to:
             self._pool.add_task(('respond_to', msg_respond_to))
         else:
+            msg['username'] = username
             self._pool.add_task(('listen_to', msg))
 
     def _get_bot_id(self):

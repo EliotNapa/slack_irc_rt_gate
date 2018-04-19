@@ -36,6 +36,24 @@ class Bot(object):
         logger.info('connected to slack RTM api')
         self._dispatcher.loop()
 
+
+    def get_client(self):
+        return self._client
+    
+    def send_message(self, channel, text):
+        ch_id = self.get_channel_id(channel)
+        if ch_id is not None:
+            self._client.rtm_send_message(ch_id, text)
+
+    def get_channel_id(self, channel_name):
+        ret_id = None
+        for channel_key in self._client.channels:
+            if self._client.channels[channel_key]['name'] == channel_name:
+                ret_id = channel_key
+                break
+        return ret_id
+
+
     def _keepactive(self):
         logger.info('keep active thread started')
         while True:
