@@ -15,3 +15,6 @@ slackbot_test_settings.py
 .cache
 /.vscode/
 /irc/tests/
+test_code.py
+new_data.txt
+new_data2.txt
