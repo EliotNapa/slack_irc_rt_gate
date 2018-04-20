@@ -530,11 +530,6 @@ class ServerConnection(Connection):
             return
 
         ### HACK eliotnapa
-        # f = open('new_data.txt', 'wb')
-        # f.write(new_data)
-        # f.close()
-        # new_str = new_data.decode('iso2022_jp_ext')
-        # new_data = new_str.encode('iso2022_jp_ext')
         if ServerConnection.buffer_class.encoding == 'iso-2022-jp-ext':
             new_data = self.regularize_iso2022jp_ext(new_data)
         ###
@@ -576,7 +571,6 @@ class ServerConnection(Connection):
                     jis_flag = 1
                 else:
                     jis_flag = 0
-                    copy_data.append(in_data[index])
             elif 3 == jis_flag:
                 if in_data[index] == 0x1b:
                     jis_flag = 2
