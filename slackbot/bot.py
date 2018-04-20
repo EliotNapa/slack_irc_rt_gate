@@ -16,13 +16,14 @@ logger = logging.getLogger(__name__)
 
 
 class Bot(object):
-    def __init__(self):
+    def __init__(self, irc_bot):
         self._client = SlackClient(
             settings.API_TOKEN,
             bot_icon=settings.BOT_ICON if hasattr(settings,
                                                   'BOT_ICON') else None,
             bot_emoji=settings.BOT_EMOJI if hasattr(settings,
-                                                    'BOT_EMOJI') else None
+                                                    'BOT_EMOJI') else None,
+            irc_bot=irc_bot
         )
         self._plugins = PluginsManager()
         self._dispatcher = MessageDispatcher(self._client, self._plugins,
@@ -31,7 +32,8 @@ class Bot(object):
     def run(self):
         self._plugins.init_plugins()
         self._dispatcher.start()
-        self._client.rtm_connect()
+        #already connected on init
+        #self._client.rtm_connect()
         _thread.start_new_thread(self._keepactive, tuple())
         logger.info('connected to slack RTM api')
         self._dispatcher.loop()

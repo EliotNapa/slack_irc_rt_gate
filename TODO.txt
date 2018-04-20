@@ -1,0 +1,2 @@
+・joined (Slack?)のjoinedのid表示を名前に変換
+・アスキーアート全滅？(笑

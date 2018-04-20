@@ -6,6 +6,7 @@ import json
 import logging
 import time
 from ssl import SSLError
+import sys
 
 import slacker
 from six import iteritems
@@ -20,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class SlackClient(object):
-    def __init__(self, token, bot_icon=None, bot_emoji=None, connect=True):
+    def __init__(self, token, bot_icon=None, bot_emoji=None, connect=True, irc_bot = None):
         self.token = token
         self.bot_icon = bot_icon
         self.bot_emoji = bot_emoji
@@ -32,14 +33,25 @@ class SlackClient(object):
         self.channels = {}
         self.connected = False
         self.webapi = slacker.Slacker(self.token)
+        self.irc_bot = irc_bot
 
         if connect:
             self.rtm_connect()
 
     def rtm_connect(self):
-        reply = self.webapi.rtm.start().body
-        time.sleep(1)
-        self.parse_slack_login_data(reply)
+        while True:
+            try:
+                reply = self.webapi.rtm.start().body
+                time.sleep(1)
+                logger.info(len(reply))
+                #logger.info(reply)
+                self.parse_slack_login_data(reply)
+                break
+            except:
+                line = sys.exc_info()[0]
+                logger.error(line)
+                logger.error(reply)
+                time.sleep(1)
 
     def reconnect(self):
         while True:
