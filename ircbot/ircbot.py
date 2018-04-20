@@ -59,8 +59,8 @@ class IrcBot(irc.bot.SingleServerIRCBot):
         #s = s1.decode('iso-2022-jp')
         #a = s.split(":", 1)
         a = e.arguments[0].split(":", 1)
-        for one_line in a:
-            logger.info('on_pubmsg "%s"', one_line)
+        # for one_line in a:
+        #     logger.info('on_pubmsg "%s"', one_line)
         if len(a) > 1 and irc.strings.lower(a[0]) == irc.strings.lower(
                 self.connection.get_nickname()):
             self.do_command(e, a[1].strip())
