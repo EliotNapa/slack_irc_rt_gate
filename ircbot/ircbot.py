@@ -66,10 +66,11 @@ class IrcBot(irc.bot.SingleServerIRCBot):
             self.do_command(e, a[1].strip())
         else:
             #send to Slack
-            for one_line in a:
-                self.send_to_slack(c,e, one_line)
-                time.sleep(1)
-            pass
+            self.send_to_slack(c,e, ':'.join(a))
+            # for one_line in a:
+            #     self.send_to_slack(c,e, one_line)
+            #     time.sleep(1)
+            # pass
         return
 
     def on_dccmsg(self, c, e):
