@@ -121,10 +121,10 @@ class IrcBot(irc.bot.SingleServerIRCBot):
         msg = ':{0}: {1}'.format(nick, message)
         self.slack_bot.send_message(self.slack_channel,msg)
 
-    def send_to_irc(self, message):
+    def send_to_irc(self, user, message):
         messages = message.split('\n')
         for one_line in messages:
-            self.connection.privmsg(self.channel, one_line)
+            self.connection.privmsg(self.channel, '({0}){1}'.format(user, one_line))
 
     def run(self):
         thread = threading.Thread(target=self.run_slack_bot)
