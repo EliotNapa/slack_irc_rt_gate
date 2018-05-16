@@ -1,5 +1,9 @@
  [lins05/slackbot](https://github.com/lins05/slackbot)と[jaraco/irc](https://github.com/jaraco/irc)を改造したIRC Slackゲートウェイです。
- 開発中です。
+
+Slack Real Time Messaging APIを利用しているのでSlack IRC gatewayとXAMP APIがシャットダウンされた後も利用可能です。
+日本のIRCでよく使われる8bit JISにも対応しています。
+
+ 開発中ですが、一応動くみたい？
 
 使い方
 
