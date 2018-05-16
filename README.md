@@ -2,6 +2,7 @@
 A IRC gateway for slack, forked from [lins05/slackbot](https://github.com/lins05/slackbot)
 and [jaraco/irc](https://github.com/jaraco/irc)
 
+Based on slack Real Time Messaging API, it works even after shutting down the slack XAMP API.
 
 Under development.
 
