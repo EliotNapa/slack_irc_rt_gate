@@ -6,6 +6,8 @@ PLUGINS = [
 ]
 SLACK_CHNNEL = '<target slack channel>' #without '#' like 'general'
 
+ERRORS_TO = None #if need, specify error trace slack channel like 'bot_error'
+
 IRC_SERVER = '<irc server>' #like 'irc.ircnet.ne.jp'
 IRC_PORT = 6667
 IRC_CHANNEL = '<irc channel name>' #with '#' like '#slack-irc'
