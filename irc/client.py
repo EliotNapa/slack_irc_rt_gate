@@ -384,7 +384,7 @@ class Connection(object):
 
     def encode(self, msg):
         """Encode a message for transmission."""
-        return msg.encode(self.transmit_encoding,"ignore")
+        return msg.encode(self.transmit_encoding,"replace")
 
 
 class ServerConnectionError(IRCError):
