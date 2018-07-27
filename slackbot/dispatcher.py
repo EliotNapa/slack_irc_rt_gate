@@ -94,6 +94,14 @@ class MessageDispatcher(object):
         if msg_respond_to:
             self._pool.add_task(('respond_to', msg_respond_to))
         else:
+            #2018/07/27 slack spec changed! file url retrieve from url property
+            if 'files' in msg:
+                for one_file in msg['files']:
+                    one_url = one_file.get('url_private')
+                    if len(msg['text']) > 0:
+                        msg['text'] += ' '
+                    msg['text'] += one_url
+            #2018/07/27 END
             msg['username'] = username
             self._pool.add_task(('listen_to', msg))
 
