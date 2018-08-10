@@ -29,8 +29,11 @@ class IrcBot(irc.bot.SingleServerIRCBot):
                                                'IRC_SERVER') else None
         port = settings.IRC_PORT if hasattr(settings,
                                             'IRC_PORT') else None
+        password = settings.IRC_PASSWORD if hasattr(settings,
+                                            'IRC_PASSWORD') else None
+
         irc.bot.SingleServerIRCBot.__init__(
-            self, [(server, port)], nickname, nickname)
+            self, [(server, port, password)], nickname, nickname)
         self.channel = channel
         self.slack_bot = Bot(self)
         self.slack_channel = settings.SLACK_CHNNEL if hasattr(settings,
