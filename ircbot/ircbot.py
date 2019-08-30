@@ -8,6 +8,7 @@ import irc.bot
 import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 from irc.client import Connection
+from irc.client import ServerNotConnectedError
 from slackbot import settings
 from slackbot.bot import Bot
 from jaraco.stream import buffer
@@ -127,7 +128,10 @@ class IrcBot(irc.bot.SingleServerIRCBot):
     def send_to_irc(self, user, message):
         messages = message.split('\n')
         for one_line in messages:
-            self.connection.privmsg(self.channel, '({0}) {1}'.format(user, one_line))
+            try:
+                self.connection.privmsg(self.channel, '({0}) {1}'.format(user, one_line))
+            except ServerNotConnectedError:
+                self.connection.reconnect()
 
     def run(self):
         thread = threading.Thread(target=self.run_slack_bot)

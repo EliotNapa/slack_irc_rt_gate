@@ -312,6 +312,17 @@ class SingleServerIRCBot(irc.client.SimpleIRCClient):
         self.server_list.append(self.server_list.pop(0))
         self._connect()
 
+    def recconect_server(self, msg="Changing servers"):
+        """Connect to a new server, possibly disconnecting from the current.
+
+        The bot will skip to next server in the server_list each time
+        jump_server is called.
+        """
+        if self.connection.is_connected():
+            self.connection.disconnect(msg)
+
+        self._connect()
+
     def on_ctcp(self, c, e):
         """Default handler for ctcp events.
 
