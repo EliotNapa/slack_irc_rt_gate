@@ -1,5 +1,6 @@
 #coding: UTF-8
 import re
+import urllib.parse
 from xml.sax.saxutils import unescape
 from slackbot.bot import listen_to
 from ircbot.iso2022encx import Iso2022jpEncX
@@ -26,7 +27,17 @@ def url_convert(src_string):
     match = re.search(r'<ht.+\|ht.+>',src_string)
 
     if match:
-        result = re.findall(r'<(ht.+)\|ht.+>',src_string)
+        result = re.findall(r'<ht.+\|(ht.+)>',src_string)
         result = '<' + result[0] + '>'
+
+    match_enc = re.search(r'<http.+\/\/.+>',result)
+
+    if match_enc:
+        find_pos = result.find('://')
+        if 0 < find_pos:
+            result = '<{0}://{1}>'.format(
+                result[1:find_pos - 1],
+                urllib.parse.quote(result[find_pos+3:-1])
+            )
 
     return result
