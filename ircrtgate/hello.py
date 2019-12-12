@@ -36,7 +36,7 @@ def url_convert(src_string):
         find_pos = result.find('://')
         if 0 < find_pos:
             result = '<{0}://{1}>'.format(
-                result[1:find_pos - 1],
+                result[1:find_pos],
                 urllib.parse.quote(result[find_pos+3:-1])
             )
 
