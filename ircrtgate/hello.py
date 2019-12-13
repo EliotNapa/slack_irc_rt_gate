@@ -21,8 +21,8 @@ def hello_send(message):
 
 def url_convert(src_string):
     """
-    simplify slack url repleat
     """
+
     result = src_string
     match = re.search(r'<ht.+\|ht.+>',src_string)
 
@@ -32,12 +32,31 @@ def url_convert(src_string):
 
     match_enc = re.search(r'<http.+\/\/.+>',result)
 
+    Encode_Path_only = True
+
     if match_enc:
-        find_pos = result.find('://')
-        if 0 < find_pos:
-            result = '<{0}://{1}>'.format(
-                result[1:find_pos],
-                urllib.parse.quote(result[find_pos+3:-1])
-            )
+        if Encode_Path_only:
+            last_pos = result.rfind('/')
+            param_pos = result.rfind('?')
+            if 0 < last_pos:
+                if 0 < param_pos:
+                    result = '<{0}/{1}?{2}>'.format(
+                            result[1:last_pos],
+                            urllib.parse.quote(result[last_pos+1:param_pos]),
+                            result[param_pos+1:-1]
+                        )
+                else:
+                    result = '<{0}/{1}>'.format(
+                            result[1:last_pos],
+                            urllib.parse.quote(result[last_pos+1:-1])
+                        )
+        
+        else:
+            find_pos = result.find('://')
+            if 0 < find_pos:
+                result = '<{0}://{1}>'.format(
+                        result[1:find_pos],
+                        urllib.parse.quote(result[find_pos+3:-1])
+                    )
 
     return result
