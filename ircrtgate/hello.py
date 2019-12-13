@@ -54,7 +54,7 @@ def url_convert(src_string):
             path_part = ''
             path_pos =  work_src.rfind('/')
             if 0 < path_pos:
-                path_part = urllib.parse.quote(work_src[path_pos:-1])
+                path_part = urllib.parse.quote(work_src[path_pos:])
                 work_src = work_src[:path_pos]
             result = work_src + path_part + param_part + fragment_part + '>'
         else:
