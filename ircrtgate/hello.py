@@ -39,7 +39,8 @@ def url_convert(src_string):
         if Encode_Path_only:
             fragment_pos = result.rfind('#')
 
-            work_src = result
+            #Trim tail '>'
+            work_src = result[:-1]
             fragment_part = ''
             if 0 < fragment_pos:
                 fragment_part = work_src[fragment_pos:-1]
