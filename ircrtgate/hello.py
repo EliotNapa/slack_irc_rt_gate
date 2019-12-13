@@ -39,23 +39,23 @@ def url_convert(src_string):
         if Encode_Path_only:
             fragment_pos = result.rfind('#')
 
-            #Trim tail '>'
             work_src = result[:-1]
             fragment_part = ''
             if 0 < fragment_pos:
-                fragment_part = work_src[fragment_pos:-1]
+                fragment_part = work_src[fragment_pos:]
                 work_src = work_src[:fragment_pos]
 
             param_part = ''
             param_pos = work_src.rfind('?')
             if 0 < param_pos:
-                param_part = work_src[param_pos:-1]
+                param_part = work_src[param_pos:]
                 work_src = work_src[:param_pos]
 
             path_part = ''
             path_pos =  work_src.rfind('/')
             if 0 < path_pos:
-                path_part = urllib.parse.quote(work_src[path_pos:])
+                path_part = urllib.parse.unquote(work_src[path_pos:])
+                path_part = urllib.parse.quote(path_part)
                 work_src = work_src[:path_pos]
             result = work_src + path_part + param_part + fragment_part + '>'
         else:
