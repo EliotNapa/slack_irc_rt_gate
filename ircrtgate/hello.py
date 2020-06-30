@@ -13,7 +13,23 @@ def hello_send(message):
     msg_str = Iso2022jpEncX.regularize('{0}'.format(message.body['text']))
     msg_str = url_convert(msg_str)
     user_str = Iso2022jpEncX.regularize('{0}'.format(message.body['username']))
-    message._client.irc_bot.send_to_irc(unescape(user_str), unescape(msg_str))
+
+    #send_str = unescape(user_str), unescape(msg_str)
+    rest_str = unescape(msg_str)
+
+    send_usr_str = unescape(user_str)
+    send_usr_len = len(send_usr_str)
+
+    lest_str_len = len(rest_str)
+
+    index = 0
+    while len(rest_str.encode('utf-8')) > 512 - (send_usr_len + 50):
+        rest_str = rest_str[0:lest_str_len - index]
+        index += 1        
+
+    #send_str = send_usr_str, rest_str
+
+    message._client.irc_bot.send_to_irc(send_usr_str, rest_str)
     #message._client.irc_bot.send_to_irc('({1}) {0}'.format(message.body['text'], message.body['username']))
     #message.send('{0} {1}!'.format(message.body['text'], message.body['username']))
 
